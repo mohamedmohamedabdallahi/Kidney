@@ -10,49 +10,72 @@ import java.util.Queue;
 
 	 private static int[][] preferences;
 	 
-	  static int[] match(int[][] preferences) {
+	  static int[] match(int[][] preferences, String rule) {
 		    int size = preferences.length;
-	        int[] matches = new int[size];
-	        int[] prefIndexes = new int[size];
-			boolean[] KidneysInWchainIndexes = new boolean[size];
-			boolean[] PatientsInWchainIndexes = new boolean[size];
-	        HashSet<Integer> freePatient = new HashSet<>();
+	        int[] matches = new int[size];  
+	        int[] prefIndexes = new int[size];   // for a patient i, it associate him to the index of his most preferred remaining unassigned kidney 
+			boolean[] KidneysInWchainIndexes = new boolean[size];  // indicate true for the  assigned patients that where in w-chain 
+			boolean[] PatientsInWchainIndexes = new boolean[size]; // indicate true for the assigned kidneys that where in w-chain
+				
+	        HashSet<Integer> freePatient = new HashSet<>(); // contains all patient that we didn't remove yet
 	        for (int i = 0; i < size; i++) {
 	            matches[i] = -2; 
 	            prefIndexes[i] = 0;
 	            freePatient.add(i);
 	        }
-	        boolean isTheEnd = false;
+	        boolean isTheEnd = false; // indicate the end of our procedure
 	        while(!isTheEnd) {
 	            for(int x : freePatient) {
+	            
+	            	
 	            	int topChoice = preferences[x][prefIndexes[x]];
 
 	                while (topChoice!= -1 && !PatientsInWchainIndexes[x] && (!freePatient.contains(topChoice) || KidneysInWchainIndexes[topChoice])) {
-	                    prefIndexes[x]++;
+	                	/*
+		            	 * for any patient that we didn't remove yet and he were not assigned and point to an unavailable kidney
+		            	 *  -> we update the index of his most preferred remaining unassigned kidney
+		            	 */
+	                	prefIndexes[x]++;
 	                    topChoice = preferences[x][prefIndexes[x]];
 	                }
-	                matches[x] = topChoice;
+	                matches[x] = topChoice; // each remaining active patient points to his most preferred remaining unassigned kidney
 	            }
-	            CycleOrChain SelectedChainOrCycle = getCycleOrChainB(matches, freePatient, PatientsInWchainIndexes);
 	            
 	            
+	            // ----------------------
+	            // * we detect a remaining cycle and if there is no cycle we find the most priority w-chain Using "getCycleOrChain" function
 	            
-	  
+	            CycleOrChain SelectedChainOrCycle;
+	            if (rule.equals("A")) {
+	            		
+	            	  SelectedChainOrCycle = getCycleOrChainA(matches, freePatient, PatientsInWchainIndexes);
+	            }
+	           
+	            else { 
+	            	// we choose the rule B in this case
+	            	
+	            	 SelectedChainOrCycle = getCycleOrChainB(matches, freePatient, PatientsInWchainIndexes);
+	            }
+	            
+	            // ----------------------
+	            
 	            
 	            
 	            if (SelectedChainOrCycle == null) {
-	            	isTheEnd = true;
+	            	isTheEnd = true; // if there is no cycle  or w-chain that we didn't match yet then we end the procedure
 	            }
 	            
 	            
 	            
 	            else {
-	            	if(SelectedChainOrCycle.type.equals("cycle")) {            		
+	            	if(SelectedChainOrCycle.type.equals("cycle")) { 
+	            		// if we detect a cycle then we match its elements and remove it from our graph
 	            		for (int x : SelectedChainOrCycle.elements) {
 	            			freePatient.remove(x);
 	            		}  	
 	            	}
 	            	else if (SelectedChainOrCycle.type.equals("wchain")) {
+	            		// if we detect a w chain then we match its elements and update the 
 	            		for (int x : SelectedChainOrCycle.elements) {
 	            			PatientsInWchainIndexes[x] = true;
 	            			if (matches[x] == -1) continue;
@@ -66,11 +89,13 @@ import java.util.Queue;
 
 	    private static CycleOrChain getCycleOrChainA (int[] choices, HashSet<Integer> free, boolean[] PatientsInWchainIndexes) {
 	    	
-	       /* # Takes a preference matrix, a vector indicating which patients have already been matched and one indicating which have already been assigned to the waiting list
-	    	  # Go through all individuals and try to find a cycle or a chain
-	    	  # If a cycle is found, return it and stop
-	    	  # If a chain is found, check if it is longer than all previous found chains, and start with the next individual and try to find a longer chain
-	    	  # Return the cycle or the longest chain as the second element of a list, first element indicates whether it is a cycle or chain
+	       /* 
+	        *  Takes a preference array, a vector indicating which patients have not already been removed and one indicating which have already been assigned and a part of w-chain
+	    	*  Go through all individuals and try to find a cycle or a chain
+	    	*  If a cycle is found, return it and stop
+	    	*  If a chain is found, check if it is longer and have more priority than all previous found chains, and start with the next individual and try to find a longer chain
+	    	*  Return the cycle or the more longer and priority chain as an object of CycleOrChain class, type attribute of this object indicates whether it is a cycle or chain
+	    	*  Or return null if there is no cycle or w-chain;
 	    	*/
 	    	
 	        HashSet<Integer> longuestChain = new HashSet<>();
@@ -103,7 +128,7 @@ import java.util.Queue;
 	            	if (cycle.size() > longuestChain.size() ||
 	            			( cycle.size() == longuestChain.size() && compairPiriority(PeriorityCycle, PeriorityLonguestChain)) ) {
 	            		
-	            		//we select this chain if "cycle" is longuer than longuestChain or both have the same size and the "cycle" is more prior
+	            		//we select this chain if "cycle" is longer than longuestChain or both have the same size and the "cycle" have priority
 	            		longuestChain = cycle;
 	            		PeriorityLonguestChain =  PeriorityCycle;
 	                } 
@@ -124,15 +149,17 @@ import java.util.Queue;
 	    
 	    private static CycleOrChain getCycleOrChainB(int[] choices, HashSet<Integer> free, boolean[] PatientsInWchainIndexes) {
 	    	
-		       /* # Takes a preference matrix, a vector indicating which patients have already been matched and one indicating which have already been assigned to the waiting list
-		    	  # Go through all individuals and try to find a cycle or a chain
-		    	  # If a cycle is found, return it and stop
-		    	  # If a chain is found, check if it is longer than all previous found chains, and start with the next individual and try to find a longer chain
-		    	  # Return the cycle or the longest chain as the second element of a list, first element indicates whether it is a cycle or chain
+	       	 /* 
+		        *  Takes a preference array, a vector indicating which patients have not already been removed and one indicating which have already been assigned and a part of w-chain
+		    	*  Go through all individuals and try to find a cycle or a chain
+		    	*  If a cycle is found, return it and stop
+		    	*  If a chain is found, check if it is longer and have more priority than all previous found chains, and start with the next individual and try to find a longer chain
+		    	*  Return the cycle or the more longer and priority chain as an object of CycleOrChain class, type attribute of this object indicates whether it is a cycle or chain
+		    	*  Or return null if there is no cycle or w-chain;
 		    	*/
 		    	
 		        HashSet<Integer> SelectedChain = new HashSet<>();
-		        Queue<Integer> highestPriorityChaine = new PriorityQueue<>();
+		        int  headOfSelectedChain = choices.length + 2; 
 		        
 		        for (int x : free) {
 		        	if (PatientsInWchainIndexes[x] ) {
@@ -140,16 +167,14 @@ import java.util.Queue;
 		        		}
 		        	
 		            HashSet<Integer> cycle = new HashSet<>();
-		            Queue<Integer> PeriorityCycle = new PriorityQueue<>();
+		            int headOfCycle = x ;
 		            
 		            cycle.add(x);
-		            PeriorityCycle.add(x);
 		            int choice = choices[x];
 		            while (!cycle.contains(choice) || !free.contains(choice) ) {
 		            	if( choice == -1 ) break;
 		            	
 		                cycle.add(choice);
-		                PeriorityCycle.add(choice);
 		                choice = choices[choice];
 		            }
 		            if (choice == x) {
@@ -158,11 +183,11 @@ import java.util.Queue;
 		            }
 		            else if (choice == -1) {
 			            	
-		            	if (highestPriorityChaine.size() == 0 || compairPiriority(PeriorityCycle, highestPriorityChaine) ) {
+		            	if ( headOfCycle < headOfSelectedChain ) {
 		            		
-		            		//we select this chain if "cycle" is longuer than longuestChain or both have the same size and the "cycle" is more prior
+		            		//we select this chain if it start with patient that have more priority the the previous selected chain
 		            		SelectedChain = cycle;
-		            		highestPriorityChaine =  PeriorityCycle;
+		            		headOfSelectedChain = headOfCycle;
 		                } 
 		            	
 		            }
@@ -181,6 +206,15 @@ import java.util.Queue;
 	    
 	    
 	    static boolean compairPiriority(Queue<Integer> Q1, Queue<Integer> Q2) {
+	    	
+	    	/*
+	    	 * this function compare the priority of two w-chain
+	    	 * In case there are two w-chains, we select the one with the highest priority patient.
+	    	 * If the highest priority patient is part of  the both chains,
+	    	 * select the chain with the second highest priority patient, and so on.
+	    	 * if the selected chain is Q1 return true
+	    	 */
+	    	
 	    	LinkedList<Integer> RemovedFromQ1 = new LinkedList<>();
 	    	LinkedList<Integer> RemovedFromQ2 = new LinkedList<>();
 	    	while(!Q1.isEmpty() && !Q2.isEmpty()) {
@@ -242,5 +276,7 @@ import java.util.Queue;
 	 
 	 
 	 public static void main(String [] args) {
+		
+		
 	 }
  }

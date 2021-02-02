@@ -28,8 +28,10 @@ public class Test4 {
 			i++;
 		}
 		sc.close();
-		
-		int[] matchnigList = KidExchange.match(K);
+		String rule;
+		rule = "A";
+	 // rule = "B";  // if you choose rule B uncomment this line
+		int[] matchnigList = KidExchange.match(K, rule);
 		KidExchange.printTheMatching(matchnigList);
 	
 	
