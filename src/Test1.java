@@ -1,5 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Test1 {
@@ -7,30 +10,36 @@ public class Test1 {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		Scanner sc = new Scanner(new File("KidneyMatching.text"));
-		//sc.useDelimiter("[\\p{javaWhitespace}\\p{Punct}]+");
-		String current = null;
-		int n = Integer.parseInt(sc.next()) ; 
-		int [][] K  = new int [n][];
-		int i = 0;
-		while (sc.hasNext()) {
-			current = sc.next();
-			int j = Integer.parseInt(current); 
-			K[i] = new int[j] ;
-			for (int s = 0; s < j; s++) {
-				K[i][s] = Integer.parseInt(sc.next());
+		// ______ Reading the file _______
+		
+				Scanner sc = new Scanner(new File("ExempleQ4.text"));
+				//sc.useDelimiter("[\\p{javaWhitespace}\\p{Punct}]+");
+				String current = null;
+				int n = Integer.parseInt(sc.next()) ; 
+				int [][] preferences  = new int [n][];
+				int i = 0;
+				while (sc.hasNext()) {
+					sc.next(); // sauter une ligne
+					String row = sc.next();
+					List<String> myList = new ArrayList<String>(Arrays.asList(row.split(",")));
+					int rowlength = myList.size(); 
+					preferences[i] = new int[rowlength] ;
+					for (int j = 0; j < rowlength; j++) {
+						preferences[i][j] = Integer.parseInt(myList.get(j)) - 1; 
+					}
+					i++;
+				}
+				sc.close();
+				
+		//  ______ End Reading ______
+		
+			  Kidney k = new Kidney(preferences);
+			
+			  Pair [] MatchingList = k.DirectDonation();
+			
+			  for (Pair P : MatchingList) {
+			       System.out.println(P);
 			}
-			i++;
-		}
-		sc.close();
-		
-		Kidney k = new Kidney(K);
-		
-		Pair [] MatchingList = k.DirectDonation();
-		
-		for (Pair P : MatchingList) {
-			System.out.println(P);
-		}
 	}
 	
 	

@@ -1,4 +1,4 @@
-import java.util.LinkedHashMap;
+
 import java.util.LinkedList;
 
 public class Kidney {
@@ -8,31 +8,36 @@ public class Kidney {
 	
 	
 	
-	Kidney (int [][] K) {
-		int n = K.length;
+	Kidney (int [][] preferences) {
+		
+		int n = preferences.length;
 		this.allPairs = new Pair[n];
 		for (int i = 0; i < n; i++) {
 			this.allPairs[i] = new Pair(new Doner(i), new Patient(i, null));
 		}
 		
 		for (int i = 0; i < n; i++) {
-			LinkedList<Doner> prefernce = new LinkedList<Doner>();
+			LinkedList<Doner> preference = new LinkedList<Doner>();
 			
-			for (int j : K[i]) {
+			for (int j : preferences[i]) {
 				if (j == -1) {
-					prefernce.add(w);
+					preference.add(w);
 				}
 				else {
-				prefernce.add(allPairs[j].k);
+				preference.add(allPairs[j].k);
 				}
 			}
-			allPairs[i].t.preference = prefernce;
+			allPairs[i].t.preference = preference;
 		}
 	}
 	
 	
-	// Verfie si le donneur appartien à la liste de preference du patien	
+	
 	boolean check(Doner elt, Patient t) {
+		
+		/*
+		 * check if the doner is inside the preference list of its patient
+		 */
 		
 		for ( Doner k : t.preference) {
 			if(elt.equal(k)) return true;
