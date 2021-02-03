@@ -9,7 +9,7 @@ Les méthodes :
 - `match` renvoie la liste de notre matching.
 - `printMatching` affiche la liste de notre matching.
 
-On implemente le test de cette algorithme dans la class `Test1`
+On implemente le test de cet algorithme dans la class `Test1`
 
 ### La Classe KidExchange
 
@@ -25,4 +25,4 @@ Les méthodes :
 - `getCycleOrChainA` return un cycle s'il y'en a, si non  return la chaine w choisit par la regle de selection `B`.
 - `compairPiriority` prend en argument deux chaine w return `true` si la premiere chaine est prioritaire au sens de règle `A` sinon return `false`.
 
-On implemente le test de cette algorithme dans la class `Test4`
+On implemente le test de cet algorithme dans la classe `Test4`
