@@ -42,7 +42,7 @@ public class Test4 {
 		rule = "A";
 	 // rule = "B";  // if you choose rule B uncomment this line
 		int[] matchnigList = KidExchange.match(preferences, rule);
-		KidExchange.printTheMatching(matchnigList);
+		KidExchange.printMatching(matchnigList);
 	
 	
 	

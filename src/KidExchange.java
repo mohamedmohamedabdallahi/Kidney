@@ -8,7 +8,6 @@ import java.util.Queue;
  class KidExchange {
 	
 
-	 private static int[][] preferences;
 	 
 	  static int[] match(int[][] preferences, String rule) {
 		    int size = preferences.length;
@@ -243,7 +242,7 @@ import java.util.Queue;
 	    	return true;
 	    }
 	    
-	    public static void printTheMatching(int[] matches) {
+	    public static void printMatching(int[] matches) {
 	    	
 	    	
 	    	for (int i = 0; i < matches.length; i++) {
