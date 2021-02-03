@@ -11,6 +11,15 @@ Les méthodes :
 
 On implemente le test de cet algorithme dans la class `Test1`
 
+### La classe GreedyMatching 
+
+Implementation de l'algorithm 2 (greedy matching)
+
+- `match` prend en argument la liste d'adjacence et renvoie la liste de notre matching.
+- `printMatching` affiche la liste de notre matching.
+
+On implemente le test de cet algorithme dans la class `Test2`
+
 ### La Classe KidExchange
 
 Implémentation de l'algorthm 3 (Cycles and Chains Matching Algorithm).
