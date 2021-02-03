@@ -18,7 +18,7 @@ Implémentation de l'algorthm 3 (Cycles and Chains Matching Algorithm).
 Les méthodes :
 - `match` prend en argument :
     -`preferences` (la liste des listes de prefrece des patients).
-    -`rule` qui contient la chaine de character `"A"` (resp `"A"`) pour la regle A (resp B).
+    -`rule` qui contient la chaine de character `"A"` (resp `"B"`) pour la regle A (resp B).
     Et renvoie la liste de notre matching.
 - `printMatching` affiche la liste de notre matching.
 - `getCycleOrChainA` reutrn un cycle s'il y'en a, si non  return la chaine w choisit par la regle de selection `A`.
