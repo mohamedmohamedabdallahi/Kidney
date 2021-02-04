@@ -14,7 +14,7 @@ public class Test9 {
 	public static void main(String [] args) throws FileNotFoundException {
 	// ______ Reading Test file _______
 	
-				Scanner sc = new Scanner(new File("test1.txt"));
+				Scanner sc = new Scanner(new File("test2.txt"));
 				//sc.useDelimiter("[\\p{javaWhitespace}\\p{Punct}]+");
 				String current = null;
 				
@@ -32,7 +32,7 @@ public class Test9 {
 				sc.close();
 				
 		//  ______  Reading End ______
-				/*
+				/*// print the adjecency matrix 
 				for (int m = 0; m < n; m++) {
 					for (int s = 0; s < n; s++) {
 						System.out.print(""+adj[m][s] +"");
@@ -42,16 +42,19 @@ public class Test9 {
 				}
 				*/
 				
+				
 				long tempsDebut = System.currentTimeMillis();
 				LinkedList<Path> allKpaths = InfeasiblePath.pathes(adj, k);
 				long tempsFin = System.currentTimeMillis();
 				long ExecutionTime = (tempsFin - tempsDebut);
 				double seconds = ExecutionTime / 1000F;
+				
+				
+				InfeasiblePath.printPaths(allKpaths);
+				System.out.println();
+				System.out.println();
 				System.out.println("Operation performed in : "+ ExecutionTime + " CPUtime.");
 			    System.out.println("Which corresponds to : "+ Double.toString(seconds) + " seconds.");
-				System.out.println();
-				System.out.println();
-				InfeasiblePath.printPaths(allKpaths);
 	}
 
 }

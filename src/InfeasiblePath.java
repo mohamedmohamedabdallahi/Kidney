@@ -14,14 +14,15 @@ class InfeasiblePath {
 				pathsListHolder.get(i).add(new Path(i));
 			}
 			
-			while (counter != K) {
+			while (counter <= K) {
 				pathsList = new ArrayList<>();
 				for (int i = 0; i < n; i++) {
 					pathsList.add(new LinkedList<Path>());
 					for (int j = 0; j < n; j++) {
 						if (adjMatrix[i][j] == 1) {
 							for (Path P : pathsListHolder.get(j)) {
-								pathsList.get(i).add(new Path(i, P));
+								// on ajoute un condition 
+								if (!P.hsetPath.contains(i)) pathsList.get(i).add(new Path(i, P));
 								
 							}
 						}
@@ -54,15 +55,22 @@ class InfeasiblePath {
 
 class Path {
 	LinkedList<Integer> path ;
+	HashSet<Integer> hsetPath;
 	Path (int i){
 		this.path = new LinkedList<Integer>();
+		this.hsetPath  = new HashSet<Integer>();
 		this.path.add(i);
+		this.hsetPath.add(i);
 	}
 	Path(int i, Path P){
 		this.path = new LinkedList<Integer>();
+		this.hsetPath  = new HashSet<Integer>();
 		this.path.add(i);
+		this.hsetPath.add(i);
+		
 		for (int j : P.path) {
 			this.path.add(j);
+			this.hsetPath.add(j);
 		}
 	}
 	
