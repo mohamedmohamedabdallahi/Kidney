@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-class InfaisablePath {
+class InfeasiblePath {
 	
 	public static LinkedList<Path> pathes (int [][] adjMatrix, int K) {
 			int n  = adjMatrix.length;
