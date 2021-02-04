@@ -43,7 +43,7 @@ public class Test9 {
 				*/
 				
 				long tempsDebut = System.currentTimeMillis();
-				LinkedList<Path> allKpaths = InfaisablePath.pathes(adj, k);
+				LinkedList<Path> allKpaths = InfeasiblePath.pathes(adj, k);
 				long tempsFin = System.currentTimeMillis();
 				long ExecutionTime = (tempsFin - tempsDebut);
 				double seconds = ExecutionTime / 1000F;
@@ -51,7 +51,7 @@ public class Test9 {
 			    System.out.println("Which corresponds to : "+ Double.toString(seconds) + " seconds.");
 				System.out.println();
 				System.out.println();
-				InfaisablePath.printPaths(allKpaths);
+				InfeasiblePath.printPaths(allKpaths);
 	}
 
 }
