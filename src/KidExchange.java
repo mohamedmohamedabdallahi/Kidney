@@ -183,8 +183,8 @@ import java.util.Queue;
 		            else if (choice == -1) {
 			            	
 		            	if ( headOfCycle < headOfSelectedChain ) {
-		            		
-		            		//we select this chain if it start with patient that have more priority the the previous selected chain
+		            		//we select this chain if it start with patient that have
+		            		//more priority than the previous selected one.
 		            		SelectedChain = cycle;
 		            		headOfSelectedChain = headOfCycle;
 		                } 
