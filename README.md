@@ -35,3 +35,13 @@ Les méthodes :
 - `compairPiriority` prend en argument deux chaine w return `true` si la premiere chaine est prioritaire au sens de règle `A` sinon return `false`.
 
 On implemente le test de cet algorithme dans la classe `Test4`
+
+### La Classe InfeasiblePath 
+
+Implémentation de l'agorithm 4 (Minimal infeasible path)
+
+Les méthodes :
+- `pathes`return la list des path de longeur K+1
+- `printPaths`affiche les chemins calculés 
+
+On implemente le test de cet algorithme dans la classe `Test9`
