@@ -36,9 +36,12 @@ public class Test1 {
 	//  ______  Reading End ______
 	
 			
-			int[] matchnigList = DirectDon.match(preferences);
+			//int[] matchnigList = DirectDon.match(preferences);
+			//DirectDon.printMatching(matchnigList); 
+			ArrayList<HashSet<Integer>> l=  Simulation.algoDirDon(30);
+			int[] matchnigList = DirectDon.match(l);
 			DirectDon.printMatching(matchnigList); 
-	
+			
 	
 	
 	}

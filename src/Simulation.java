@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class Simulation {
@@ -60,10 +62,18 @@ public class Simulation {
 			}
 	return L;
 	}
-	public static void main(String[] arg) {
-		LinkedList<Integer>[] L = Groupe(30);
-		for(int i : L[1]) {
-			System.out.println(i);
+	public static ArrayList<HashSet<Integer>> algoDirDon(int n) {
+		LinkedList<Integer>[] L = Groupe(n);
+		ArrayList<HashSet<Integer>> preferences = new ArrayList<HashSet<Integer>>();
+		for (int i = 0; i < L.length; i++) {
+			HashSet<Integer> preferenceCol = new HashSet<Integer>() ;
+			for(int j : L[i]) {
+			preferenceCol.add(j); 
+			}
+			preferences.add(preferenceCol);
 		}
+		
+		return preferences;
 	}
+	
 }
