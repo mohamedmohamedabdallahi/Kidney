@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class Simulation {
 	static String O ="O" ;
@@ -35,10 +38,32 @@ public class Simulation {
     	return L;
     }
 	
-	public static void main(String[] args) {
-		String []Patient = blood(100);
-		String []Doner = blood(100);
+	public static LinkedList<Integer>[] Groupe(int n) {
+		String []Patient = blood(n);
+		String []Doner = blood(n);
+		LinkedList<Integer> []L = new LinkedList[30];
 		for (int i =0;i<Patient.length;i++) {
-	System.out.println((Patient[i]+","+Doner[i]));}
+			L[i] = new LinkedList<Integer>();
+			for(int j =0;j<Doner.length;j++) {
+				if(Patient[i].equals(Doner[j])) {
+					L[i].add(j);
+				}}
+				if(!L[i].contains(i)) {
+					double r = Math.random();
+					if(r<0.5) {
+						L[i].add(i);
+					}
+					else L[i].add(-1);
+				}
+				Collections.shuffle(L[i]);
+				
+			}
+	return L;
+	}
+	public static void main(String[] arg) {
+		LinkedList<Integer>[] L = Groupe(30);
+		for(int i : L[1]) {
+			System.out.println(i);
+		}
 	}
 }

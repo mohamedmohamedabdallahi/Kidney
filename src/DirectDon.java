@@ -17,8 +17,7 @@ public class DirectDon {
 	}
 	
 	public static void printMatching(int[] matches) {
-    	
-    	
+		
     	for (int i = 0; i < matches.length; i++) {
     		int j = i+1;
     		if (matches[i] == -1) {
