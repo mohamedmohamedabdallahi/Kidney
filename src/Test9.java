@@ -14,7 +14,7 @@ public class Test9 {
 	public static void main(String [] args) throws FileNotFoundException {
 	// ______ Reading Test file _______
 	
-				Scanner sc = new Scanner(new File("test2.txt"));
+				Scanner sc = new Scanner(new File("test3.txt"));
 				//sc.useDelimiter("[\\p{javaWhitespace}\\p{Punct}]+");
 				String current = null;
 				
