@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Simulation {
 	static String O ="O" ;
@@ -62,7 +64,7 @@ public class Simulation {
 			}
 	return L;
 	}
-	public static ArrayList<HashSet<Integer>> algoDirDon(int n) {
+	public static Map<ArrayList<HashSet<Integer>>, LinkedList<Integer>[]> algoDirDon(int n) {
 		LinkedList<Integer>[] L = Groupe(n);
 		ArrayList<HashSet<Integer>> preferences = new ArrayList<HashSet<Integer>>();
 		for (int i = 0; i < L.length; i++) {
@@ -72,8 +74,47 @@ public class Simulation {
 			}
 			preferences.add(preferenceCol);
 		}
+		Map<ArrayList<HashSet<Integer>>, LinkedList<Integer>[]> coordinates = new HashMap<>();
+		coordinates.put( preferences,L);
 		
-		return preferences;
+		return coordinates;
 	}
+	public static Map<int[][], LinkedList<Integer>[]>alogKidEx(int n){
+		LinkedList<Integer>[] L = Groupe(n);
+		int [][] preferences = new int[n][];
+		for (int i = 0; i < L.length; i++) {
+			preferences[i] = new int[L[i].size()];
+			int k =0;
+			for(int j : L[i]) {
+					preferences[i][k]=j;
+					k++;
+				}
+				
+			}
+		Map<int[][], LinkedList<Integer>[]> coordinates = new HashMap<>();
+		coordinates.put( preferences,L);
+	
+		return coordinates;
+	}
+	/*
+	Map<int[][], LinkedList<Integer>[]> preferences1 = Simulation.alogKidEx(30);
+	for (Map.Entry<int[][], LinkedList<Integer>[]> pair : preferences1.entrySet()) {
+		int [][]preferences2 = pair.getKey();
+	    LinkedList<Integer>[] blood = pair.getValue();
+	
+	
+	String rule;
+	//rule = "A";
+ rule = "B";  // if you choose rule B uncomment this line
+	int[] matchnigList = KidExchange.match(preferences2, rule);
+	
+	KidExchange.printMatching(matchnigList);
+	for(int m =0;m<30;m++) {
+		System.out.println("les voisin de"+m+"sont :");
+		for(int t:blood[m]) {
+			System.out.println(t+",");
+		}
+	} 
+	}*/
 	
 }

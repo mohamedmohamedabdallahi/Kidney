@@ -38,8 +38,7 @@ public class Test1 {
 			
 			//int[] matchnigList = DirectDon.match(preferences);
 			//DirectDon.printMatching(matchnigList); 
-			ArrayList<HashSet<Integer>> l=  Simulation.algoDirDon(30);
-			int[] matchnigList = DirectDon.match(l);
+			int[] matchnigList = DirectDon.match(preferences);
 			DirectDon.printMatching(matchnigList); 
 			
 	
