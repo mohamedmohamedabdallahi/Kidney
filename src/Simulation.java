@@ -12,18 +12,7 @@ public class Simulation {
 	static String AB  ="AB";
 	static String A ="A";
 			
-    public static double proba(double a , double  b){
-    	double r = Math.random();
-    	System.out.println(r);
-    	double m = a - (a-b)/2;
-    	if(r<m) {
-    		r=a;
-    	}
-    	else {
-    		r=b;
-    	}
-    	return r;
-    }
+ 
 	public static String [] blood(int n) {
 		String[]L = new String[n];
     	for(int i =0;i<n;i++) {
@@ -42,16 +31,16 @@ public class Simulation {
     	return L;
     }
 	
-	public static LinkedList<Integer>[] Groupe(int n) {
-		String []Patient = blood(n);
-		String []Doner = blood(n);
-		LinkedList<Integer> []L = new LinkedList[30];
+	public static LinkedList<Integer>[] Groupe(String []Patient , String []Doner) {
+		int n = Patient.length;
+		LinkedList<Integer> []L = new LinkedList[n];
 		for (int i =0;i<Patient.length;i++) {
 			L[i] = new LinkedList<Integer>();
 			for(int j =0;j<Doner.length;j++) {
 				if(Patient[i].equals(Doner[j])) {
 					L[i].add(j);
 				}}
+			   Collections.shuffle(L[i]);
 				if(!L[i].contains(i)) {
 					double r = Math.random();
 					if(r<0.5) {
@@ -59,13 +48,12 @@ public class Simulation {
 					}
 					else L[i].add(-1);
 				}
-				Collections.shuffle(L[i]);
+			
 				
 			}
 	return L;
 	}
-	public static Map<ArrayList<HashSet<Integer>>, LinkedList<Integer>[]> algoDirDon(int n) {
-		LinkedList<Integer>[] L = Groupe(n);
+	public static Map<ArrayList<HashSet<Integer>>, LinkedList<Integer>[]> algoDirDon(LinkedList<Integer>[] L) {
 		ArrayList<HashSet<Integer>> preferences = new ArrayList<HashSet<Integer>>();
 		for (int i = 0; i < L.length; i++) {
 			HashSet<Integer> preferenceCol = new HashSet<Integer>() ;
@@ -79,8 +67,8 @@ public class Simulation {
 		
 		return coordinates;
 	}
-	public static Map<int[][], LinkedList<Integer>[]>alogKidEx(int n){
-		LinkedList<Integer>[] L = Groupe(n);
+	public static Map<int[][], LinkedList<Integer>[]>alogKidEx(LinkedList<Integer>[] L){
+        int n =L.length;
 		int [][] preferences = new int[n][];
 		for (int i = 0; i < L.length; i++) {
 			preferences[i] = new int[L[i].size()];
@@ -96,23 +84,61 @@ public class Simulation {
 	
 		return coordinates;
 	}
+	
+	public static LinkedList<Integer> waitingList(int[]L) {
+		LinkedList<Integer> waintinglist= new LinkedList<Integer>();
+		int w =0;
+		for(int i =0;i<L.length;i++) {
+			if(L[i]==-1) { 
+				waintinglist.add(i);
+				}
+		}
+		return waintinglist;
+	}
+	public static int wiatinglistmatch(LinkedList<Integer> waitinglist,String [] cadavre,String [] Patient) {
+		int n =0;
+		for(int i : waitinglist) {
+			for(int j =0;j<cadavre.length;j++) {
+			if(Patient[i].equals(cadavre[j])) {
+				n++;
+				cadavre[j]=null;
+				break;
+			}
+				}
+		}
+		return n;
+	}
+	public static int nbrtransplatation(int []L , int w) {
+		int n = 0;
+		LinkedList<Integer> wait=  waitingList(L);
+		n = L.length - wait.size() + w;
+		return n;
+	}
+	
 	/*
-	Map<int[][], LinkedList<Integer>[]> preferences1 = Simulation.alogKidEx(30);
-	for (Map.Entry<int[][], LinkedList<Integer>[]> pair : preferences1.entrySet()) {
-		int [][]preferences2 = pair.getKey();
-	    LinkedList<Integer>[] blood = pair.getValue();
-	
-	
-	String rule;
-	//rule = "A";
- rule = "B";  // if you choose rule B uncomment this line
-	int[] matchnigList = KidExchange.match(preferences2, rule);
-	
-	KidExchange.printMatching(matchnigList);
-	for(int m =0;m<30;m++) {
-		System.out.println("les voisin de"+m+"sont :");
-		for(int t:blood[m]) {
-			System.out.println(t+",");
+	 int n = 5
+	LinkedList<Integer>[] L = Simulation.Groupe(n);
+		Map<int[][], LinkedList<Integer>[]> preferences1 = Simulation.alogKidEx(L);
+		for (Map.Entry<int[][], LinkedList<Integer>[]> pair : preferences1.entrySet()) {
+			int [][]preferences2 = pair.getKey();
+		    LinkedList<Integer>[] blood = pair.getValue();
+		
+		
+		String rule;
+		rule = "A";
+	 //rule = "B";  // if you choose rule B uncomment this line
+		int[] matchnigList = KidExchange.match(preferences2, rule);
+		
+		KidExchange.printMatching(matchnigList);
+		for(int m =0;m<n;m++) {
+			int k=m+1;
+			System.out.println("les voisin de"+k+"sont :");
+			for(int t:blood[m]) {
+				int r =t+1;
+				System.out.println(r+",");
+			}
+		} 
+		}
 		}
 	} 
 	}*/

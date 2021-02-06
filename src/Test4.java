@@ -2,7 +2,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Test4 {
@@ -37,12 +39,11 @@ public class Test4 {
 		//  ______ End Reading ______
 		
 		
-		
-		String rule;
+		//String rule;
 		//rule = "A";
-	 rule = "B";  // if you choose rule B uncomment this line
-		int[] matchnigList = KidExchange.match(preferences, rule);
-		KidExchange.printMatching(matchnigList);
+	 //rule = "B";  // if you choose rule B uncomment this line
+		//int[] matchnigList = KidExchange.match(preferences, rule);
+		//KidExchange.printMatching(matchnigList);
 	
 	
 	
