@@ -14,10 +14,7 @@ public class Test9 {
 	public static void main(String [] args) throws FileNotFoundException {
 	// ______ Reading Test file _______
 	
-				Scanner sc = new Scanner(new File("test3.txt"));
-				//sc.useDelimiter("[\\p{javaWhitespace}\\p{Punct}]+");
-				String current = null;
-				
+				Scanner sc = new Scanner(new File("test1.txt"));
 				int n =  new BigDecimal(sc.next()).intValue();
 				int k = 3;
 				new BigDecimal(sc.next()).intValue(); 
@@ -44,13 +41,13 @@ public class Test9 {
 				
 				
 				long tempsDebut = System.currentTimeMillis();
-				LinkedList<Path> allKpaths = InfeasiblePath.pathes(adj, k);
+				LinkedList<Path> allInfeasiblepaths = InfeasiblePath.pathes(adj, k);
 				long tempsFin = System.currentTimeMillis();
 				long ExecutionTime = (tempsFin - tempsDebut);
 				double seconds = ExecutionTime / 1000F;
 				
 				
-				InfeasiblePath.printPaths(allKpaths);
+				InfeasiblePath.printPaths(allInfeasiblepaths);
 				System.out.println();
 				System.out.println();
 				System.out.println("Operation performed in : "+ ExecutionTime + " CPUtime.");
