@@ -14,7 +14,7 @@ public class Test9 {
 	public static void main(String [] args) throws FileNotFoundException {
 	// ______ Reading Test file _______
 	
-				Scanner sc = new Scanner(new File("test1.txt"));
+				Scanner sc = new Scanner(new File("test3.txt"));
 				int n =  new BigDecimal(sc.next()).intValue();
 				int k = 3;
 				new BigDecimal(sc.next()).intValue(); 
@@ -52,6 +52,7 @@ public class Test9 {
 				System.out.println();
 				System.out.println("Operation performed in : "+ ExecutionTime + " CPUtime.");
 			    System.out.println("Which corresponds to : "+ Double.toString(seconds) + " seconds.");
+			    System.out.println(allInfeasiblepaths.size());
 	}
 
 }
