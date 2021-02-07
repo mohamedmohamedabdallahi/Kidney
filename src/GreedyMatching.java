@@ -9,6 +9,9 @@ public class GreedyMatching {
 		LinkedList<Integer>[] adj = preferncesToUndirctedGraph (prefernces);
 		int n = adj.length;
 		int [] matches = new int [n];
+		for ( int i = 0; i < n; i++) {
+			matches[i] = -1;
+		}
 		for (int i = 0; i < n; i++) {
 			if (adj[i] == null) continue; 
 			for (int j : adj[i]) {

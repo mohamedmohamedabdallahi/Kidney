@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,8 +37,24 @@ public class Test2 {
 			
 		
 			int[] matchnigList = GreedyMatching.match(preferences);
+			
+			
+			
 			GreedyMatching.printMatching(matchnigList);
-		
+			
+			// debug ///////////////
+		/*
+			LinkedList<Integer>[] Undirected =  GreedyMatching.preferncesToUndirctedGraph(preferences);
+			int g = 1;
+			for ( LinkedList<Integer> ListAdjI : Undirected) {
+				System.out.print("peatient "+ g + " : ");
+				for (int j : ListAdjI ) {
+					System.out.print((j+1) + " , ");
+				}
+				System.out.println();
+				g++;
+			}*/
+			/////////////
 	}
 
 }
