@@ -64,6 +64,18 @@ Implémentation des contraintes de notre probleme `LP`
 La méthode : 
 -  `getContraits` a partir des six conditions qu'on a (voir question 10), return l'objet contraint
 
+### La Classe Sumilation
+
+Implémentation de programe de simulation.
+
+Les méthodes :
+- `blood` renvoie la liste des types de sang pour les patients ou donneurs, prend comme entrer int n qui est le nombre de patient a generer.
+-`nbrtransplatation` renvoie le nombre de transplatation d'un algorithme, prend en entrer Liste de matching et le nombre de kidney de waitingliste compatible avec des patient dans le waitinglist .
+- `printSumilation` affiche les resultats de la sumilation de notre Sumilation.
+
+
+On implemente le test de cet algorithme dans la class `Test13`
+
 
 
 
