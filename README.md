@@ -45,3 +45,14 @@ Les méthodes :
 - `printPaths`affiche les chemins calculés 
 
 On implemente le test de cet algorithme dans la classe `Test9`
+
+### La Class BranchAndBound 
+
+Implémentation de l'agorithm 5 (Branch-and-bound)
+
+Les méthodes : 
+- `runBranchAndBound` qui prend en argumant un obje de la class contrainte et return 
+- `RecursivBranchAndBound` return la matrice d'assignement 
+- `printTheMatching`prend en argument la matrice d'assignement (solution de brancheAndBound) pour afficher le matching
+
+On implemente le test de cet algorithme dans la classe `Test11`
