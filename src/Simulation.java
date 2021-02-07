@@ -96,22 +96,6 @@ public class Simulation {
 		
 		return preferences;
 	}
-	public static int[][]alogGreedy(LinkedList<Integer>[] L){
-        int n =L.length;
-		int [][] Matadj = new int[n][n];
-		for (int i = 0; i < L.length; i++) {
-			for(int j =0 ;j<n ; j++) {
-				if(L[i].contains(j) && L[j].contains(i)) {
-				Matadj[i][j]=j;
-				}
-				else {Matadj[i][j]=0;
-				}
-				
-			}
-				}
-		
-		return Matadj;
-	}
 	
 	public static LinkedList<Integer> waitingList(int[]L) {
 		LinkedList<Integer> waintinglist= new LinkedList<Integer>();
@@ -145,13 +129,15 @@ public class Simulation {
 	public static void printSumilation() {
 		int patien = 30;
 		double s = 0;       //nombre de transpaltation pour Cycle and chain
-		double s1 = 0;       //nombre de transpaltation pour Direct Donation
+		double s1 = 0; //nombre de transpaltation pour Direct Donation
+		double s2 = 0; 
 		for(int y = 0 ;y < 100;y++) {
 			String [] Patient = Simulation.blood(patien);    //Generer 30 patient 
 			String [] Doner = Simulation.blood(patien);       //Generer 30 patient 
 			LinkedList<Integer>[] L = Simulation.Groupe(Patient ,Doner );  // retourn liste de preference de chaque patient 
 			String []cadavre = Simulation.blood(3);  //Generer 3 Kidney 
-			int[][] SumKidEX = Simulation.alogKidEx(L);  
+			int[][] SumKidEX = Simulation.alogKidEx(L); 
+			int [][] SumGreedy = Simulation.alogGreedy(L);
 			ArrayList<HashSet<Integer>> SumDirect = Simulation.algoDirDon(L);
 			
 			String rule;
@@ -162,19 +148,28 @@ public class Simulation {
 			int nbr = Simulation.wiatinglistmatch(waitinglist, cadavre, Patient);
 			int nbrtrnsp = Simulation.nbrtransplatation(matchnigList, nbr);
 			s=s+nbrtrnsp;
+			
+			int[] matchnigList2 = GreedyMatching.match(SumGreedy);
+			LinkedList<Integer>waitinglist2 = Simulation.waitingList(matchnigList2);
+			int nbr2 = Simulation.wiatinglistmatch(waitinglist2, cadavre, Patient);
+			int nbrtrnsp2 = Simulation.nbrtransplatation(matchnigList2, nbr2);
+			s2=s2+nbrtrnsp2;
 		
 		    int[] matchnigList1 = DirectDon.match(SumDirect);
 		    LinkedList<Integer>waitinglist1 = Simulation.waitingList(matchnigList1);
 			int nbr1 = Simulation.wiatinglistmatch(waitinglist1, cadavre, Patient);
 			int nbrtrnsp1 = Simulation.nbrtransplatation(matchnigList1, nbr1);
 			s1=s1+nbrtrnsp1;
-		}s1 = (double)s1/100;
+		}
+		s1 = (double)s1/100;
 		s = (double)s/100;
+		s2 = (double)s2/100;
 		    
 			
 		
 		System.out.println("Moyen pour KidExchange est "+s);
 		System.out.println("Moyen pour Direct algo est "+s1);
+		System.out.println("Moyen pour GreedyMatching est "+s2);
 	
 	}
 	
