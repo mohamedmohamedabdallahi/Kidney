@@ -55,7 +55,7 @@ Les méthodes :
 - `RecursivBranchAndBound` fais la procedure recursive pour trouver la solution optimal
 - `printTheMatching`prend en argument la matrice d'affectation (solution de brancheAndBound) pour afficher le matching
 
-On utilise la bibliotheque CSS qui implement la methode simplex, il est mits dans lib 
+On utilise la bibliotheque CSS qui implement la methode simplex
 
 On implemente le test de cet algorithme dans la classe `Test11`
 
