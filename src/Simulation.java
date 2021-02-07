@@ -31,7 +31,11 @@ public class Simulation {
     	return L;
     }
 	
+	
+	
 	public static LinkedList<Integer>[] Groupe(String []Patient , String []Doner) {
+		//Generate random preferences list using the blood type of each patient and kidney
+		 
 		int n = Patient.length;
 		LinkedList<Integer> []L = new LinkedList[n];
 		for (int i =0;i<Patient.length;i++) {
@@ -53,6 +57,9 @@ public class Simulation {
 			}
 	return L;
 	}
+	
+	
+	
 	public static Map<ArrayList<HashSet<Integer>>, LinkedList<Integer>[]> algoDirDon(LinkedList<Integer>[] L) {
 		ArrayList<HashSet<Integer>> preferences = new ArrayList<HashSet<Integer>>();
 		for (int i = 0; i < L.length; i++) {
@@ -67,6 +74,10 @@ public class Simulation {
 		
 		return coordinates;
 	}
+	
+	
+	
+	
 	public static Map<int[][], LinkedList<Integer>[]>alogKidEx(LinkedList<Integer>[] L){
         int n =L.length;
 		int [][] preferences = new int[n][];
@@ -85,6 +96,9 @@ public class Simulation {
 		return coordinates;
 	}
 	
+	
+	
+	
 	public static LinkedList<Integer> waitingList(int[]L) {
 		LinkedList<Integer> waintinglist= new LinkedList<Integer>();
 		int w =0;
@@ -95,6 +109,11 @@ public class Simulation {
 		}
 		return waintinglist;
 	}
+	
+	
+	
+	
+	
 	public static int wiatinglistmatch(LinkedList<Integer> waitinglist,String [] cadavre,String [] Patient) {
 		int n =0;
 		for(int i : waitinglist) {
@@ -108,12 +127,21 @@ public class Simulation {
 		}
 		return n;
 	}
+	
+	
+	
+	
+	
 	public static int nbrtransplatation(int []L , int w) {
 		int n = 0;
 		LinkedList<Integer> wait=  waitingList(L);
 		n = L.length - wait.size() + w;
 		return n;
 	}
+	
+	
+	
+	
 	
 	/*
 	 int n = 5

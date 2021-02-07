@@ -11,7 +11,7 @@ public class Test2 {
 
 	// ______ Reading the file _______
 	
-			Scanner sc = new Scanner(new File("Test2.text"));
+			Scanner sc = new Scanner(new File("ExempleQ2.text"));
 			int n = Integer.parseInt(sc.next()) ; 
 			int [][] adj  = new int [n][];
 			int i = 0;

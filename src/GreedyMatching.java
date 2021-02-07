@@ -1,7 +1,12 @@
+import java.util.LinkedList;
 
 public class GreedyMatching {
 	
-	public static int [] match(int [][] adj) {
+	public static int [] match(int [][] prefernces) {
+		
+		
+		
+		LinkedList<Integer>[] adj = preferncesToUndirctedGraph (prefernces);
 		int n = adj.length;
 		int [] matches = new int [n];
 		for (int i = 0; i < n; i++) {
@@ -37,5 +42,33 @@ public class GreedyMatching {
 	    		}
 	    	}
 	    }
+	
+	
+	
+	public static LinkedList<Integer>[] preferncesToUndirctedGraph (int [][] prefernces){
+		LinkedList<Integer>[] adjList  = new LinkedList[prefernces.length];
+		for (int i = 0; i < prefernces.length; i++) {
+			for (int j :  prefernces[i]) {
+				if ( Contains(i, prefernces[j])) {
+					adjList[i].add(i);
+				}
+			}
+		}
+	
+		
+		
+		
+		return adjList;
+		
+	}
+	
+	public static boolean Contains(int i , int[] tab) {
+		for (int j : tab) {
+			if (i == j) return true;
+		}
+		
+		return false;
+		
+	}
 
 }
