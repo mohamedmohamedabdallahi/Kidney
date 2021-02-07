@@ -51,8 +51,20 @@ On implemente le test de cet algorithme dans la classe `Test9`
 Implémentation de l'agorithm 5 (Branch-and-bound)
 
 Les méthodes : 
-- `runBranchAndBound` qui prend en argumant un obje de la class contrainte et return 
-- `RecursivBranchAndBound` return la matrice d'assignement 
-- `printTheMatching`prend en argument la matrice d'assignement (solution de brancheAndBound) pour afficher le matching
+- `runBranchAndBound` prend en argumant un obje de la class MatchingContraints et return la matrice d'affectation 
+- `RecursivBranchAndBound` fais la procedure recursive pour trouver la solution optimal
+- `printTheMatching`prend en argument la matrice d'affectation (solution de brancheAndBound) pour afficher le matching
 
 On implemente le test de cet algorithme dans la classe `Test11`
+
+### La Class MatchingContraints
+
+Implémentation des contraintes de notre probleme `LP`
+
+La méthode : 
+-  `getContraits` a partir des six conditions qu'on a (voir question 10), return l'objet contraint
+
+
+
+
+
