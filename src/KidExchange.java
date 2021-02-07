@@ -238,7 +238,7 @@ import java.util.Queue;
 	    		}
 	    	}
 	    	
-	    	System.out.print("the two list has the same priority");
+	    	//System.out.print("the two list has the same priority");
 	    	return true;
 	    }
 	    

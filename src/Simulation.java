@@ -31,19 +31,31 @@ public class Simulation {
     	return L;
     }
 	
-	
-	
 	public static LinkedList<Integer>[] Groupe(String []Patient , String []Doner) {
-		//Generate random preferences list using the blood type of each patient and kidney
-		 
 		int n = Patient.length;
 		LinkedList<Integer> []L = new LinkedList[n];
 		for (int i =0;i<Patient.length;i++) {
 			L[i] = new LinkedList<Integer>();
 			for(int j =0;j<Doner.length;j++) {
-				if(Patient[i].equals(Doner[j])) {
+				if(Patient[i].equals(AB)) {
 					L[i].add(j);
-				}}
+				}
+				else if(Patient[i].equals(B)) {
+					if(Doner[j].equals(B) || Doner[j].equals(O)) {
+					 L[i].add(j);
+					}
+				}
+				else if(Patient[i].equals(A)) {
+					if(Doner[j].equals(A) || Doner[j].equals(O)) {
+					 L[i].add(j);
+					}
+				}
+				else if(Patient[i].equals(O)) {
+					if(Doner[j].equals(O)) {
+					 L[i].add(j);
+					}
+				}
+				}
 			   Collections.shuffle(L[i]);
 				if(!L[i].contains(i)) {
 					double r = Math.random();
@@ -57,10 +69,7 @@ public class Simulation {
 			}
 	return L;
 	}
-	
-	
-	
-	public static Map<ArrayList<HashSet<Integer>>, LinkedList<Integer>[]> algoDirDon(LinkedList<Integer>[] L) {
+	public static ArrayList<HashSet<Integer>>algoDirDon(LinkedList<Integer>[] L) {
 		ArrayList<HashSet<Integer>> preferences = new ArrayList<HashSet<Integer>>();
 		for (int i = 0; i < L.length; i++) {
 			HashSet<Integer> preferenceCol = new HashSet<Integer>() ;
@@ -69,16 +78,10 @@ public class Simulation {
 			}
 			preferences.add(preferenceCol);
 		}
-		Map<ArrayList<HashSet<Integer>>, LinkedList<Integer>[]> coordinates = new HashMap<>();
-		coordinates.put( preferences,L);
 		
-		return coordinates;
+		return preferences;
 	}
-	
-	
-	
-	
-	public static Map<int[][], LinkedList<Integer>[]>alogKidEx(LinkedList<Integer>[] L){
+	public static int[][] alogKidEx(LinkedList<Integer>[] L){
         int n =L.length;
 		int [][] preferences = new int[n][];
 		for (int i = 0; i < L.length; i++) {
@@ -90,14 +93,25 @@ public class Simulation {
 				}
 				
 			}
-		Map<int[][], LinkedList<Integer>[]> coordinates = new HashMap<>();
-		coordinates.put( preferences,L);
-	
-		return coordinates;
+		
+		return preferences;
 	}
-	
-	
-	
+	public static int[][]alogGreedy(LinkedList<Integer>[] L){
+        int n =L.length;
+		int [][] Matadj = new int[n][n];
+		for (int i = 0; i < L.length; i++) {
+			for(int j =0 ;j<n ; j++) {
+				if(L[i].contains(j) && L[j].contains(i)) {
+				Matadj[i][j]=j;
+				}
+				else {Matadj[i][j]=0;
+				}
+				
+			}
+				}
+		
+		return Matadj;
+	}
 	
 	public static LinkedList<Integer> waitingList(int[]L) {
 		LinkedList<Integer> waintinglist= new LinkedList<Integer>();
@@ -109,11 +123,6 @@ public class Simulation {
 		}
 		return waintinglist;
 	}
-	
-	
-	
-	
-	
 	public static int wiatinglistmatch(LinkedList<Integer> waitinglist,String [] cadavre,String [] Patient) {
 		int n =0;
 		for(int i : waitinglist) {
@@ -127,48 +136,47 @@ public class Simulation {
 		}
 		return n;
 	}
-	
-	
-	
-	
-	
 	public static int nbrtransplatation(int []L , int w) {
 		int n = 0;
 		LinkedList<Integer> wait=  waitingList(L);
 		n = L.length - wait.size() + w;
 		return n;
 	}
-	
-	
-	
-	
-	
-	/*
-	 int n = 5
-	LinkedList<Integer>[] L = Simulation.Groupe(n);
-		Map<int[][], LinkedList<Integer>[]> preferences1 = Simulation.alogKidEx(L);
-		for (Map.Entry<int[][], LinkedList<Integer>[]> pair : preferences1.entrySet()) {
-			int [][]preferences2 = pair.getKey();
-		    LinkedList<Integer>[] blood = pair.getValue();
+	public static void printSumilation() {
+		int patien = 30;
+		double s = 0;       //nombre de transpaltation pour Cycle and chain
+		double s1 = 0;       //nombre de transpaltation pour Direct Donation
+		for(int y = 0 ;y < 100;y++) {
+			String [] Patient = Simulation.blood(patien);    //Generer 30 patient 
+			String [] Doner = Simulation.blood(patien);       //Generer 30 patient 
+			LinkedList<Integer>[] L = Simulation.Groupe(Patient ,Doner );  // retourn liste de preference de chaque patient 
+			String []cadavre = Simulation.blood(3);  //Generer 3 Kidney 
+			int[][] SumKidEX = Simulation.alogKidEx(L);  
+			ArrayList<HashSet<Integer>> SumDirect = Simulation.algoDirDon(L);
+			
+			String rule;
+			rule = "A";
+		 //rule = "B";  // if you choose rule B uncomment this line
+			int[] matchnigList = KidExchange.match(SumKidEX, rule);
+			LinkedList<Integer>waitinglist = Simulation.waitingList(matchnigList);
+			int nbr = Simulation.wiatinglistmatch(waitinglist, cadavre, Patient);
+			int nbrtrnsp = Simulation.nbrtransplatation(matchnigList, nbr);
+			s=s+nbrtrnsp;
 		
+		    int[] matchnigList1 = DirectDon.match(SumDirect);
+		    LinkedList<Integer>waitinglist1 = Simulation.waitingList(matchnigList1);
+			int nbr1 = Simulation.wiatinglistmatch(waitinglist1, cadavre, Patient);
+			int nbrtrnsp1 = Simulation.nbrtransplatation(matchnigList1, nbr1);
+			s1=s1+nbrtrnsp1;
+		}s1 = (double)s1/100;
+		s = (double)s/100;
+		    
+			
 		
-		String rule;
-		rule = "A";
-	 //rule = "B";  // if you choose rule B uncomment this line
-		int[] matchnigList = KidExchange.match(preferences2, rule);
-		
-		KidExchange.printMatching(matchnigList);
-		for(int m =0;m<n;m++) {
-			int k=m+1;
-			System.out.println("les voisin de"+k+"sont :");
-			for(int t:blood[m]) {
-				int r =t+1;
-				System.out.println(r+",");
-			}
-		} 
-		}
-		}
-	} 
-	}*/
+		System.out.println("Moyen pour KidExchange est "+s);
+		System.out.println("Moyen pour Direct algo est "+s1);
+	
+	}
+	
 	
 }
