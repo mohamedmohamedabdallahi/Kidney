@@ -11,29 +11,31 @@ public class Test2 {
 
 	// ______ Reading the file _______
 	
-			Scanner sc = new Scanner(new File("ExempleQ2.text"));
-			int n = Integer.parseInt(sc.next()) ; 
-			int [][] adj  = new int [n][];
-			int i = 0;
-			while (sc.hasNext()) {
-				sc.next(); // sauter une ligne
-				String row = sc.next();
-				List<String> myList = new ArrayList<String>(Arrays.asList(row.split(",")));
-				int rowlength = myList.size(); 
-				adj[i] = new int[rowlength] ;
-				for (int j = 0; j < rowlength; j++) {
-					adj[i][j] = Integer.parseInt(myList.get(j)) - 1; 
-				}
-				i++;
+		Scanner sc = new Scanner(new File("ExempleQ4.text"));
+		//sc.useDelimiter("[\\p{javaWhitespace}\\p{Punct}]+");
+		String current = null;
+		int n = Integer.parseInt(sc.next()) ; 
+		int [][] preferences  = new int [n][];
+		int i = 0;
+		while (sc.hasNext()) {
+			sc.next(); // sauter une ligne
+			String row = sc.next();
+			List<String> myList = new ArrayList<String>(Arrays.asList(row.split(",")));
+			int rowlength = myList.size(); 
+			preferences[i] = new int[rowlength] ;
+			for (int j = 0; j < rowlength; j++) {
+				preferences[i][j] = Integer.parseInt(myList.get(j)) - 1; 
 			}
-			sc.close();
+			i++;
+		}
+		sc.close();
 			
 			//  ______ End Reading ______
 			
 			
 			
 		
-			int[] matchnigList = GreedyMatching.match(adj);
+			int[] matchnigList = GreedyMatching.match(preferences);
 			GreedyMatching.printMatching(matchnigList);
 		
 	}

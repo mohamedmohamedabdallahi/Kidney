@@ -48,6 +48,7 @@ public class GreedyMatching {
 	public static LinkedList<Integer>[] preferncesToUndirctedGraph (int [][] prefernces){
 		LinkedList<Integer>[] adjList  = new LinkedList[prefernces.length];
 		for (int i = 0; i < prefernces.length; i++) {
+			adjList[i] = new LinkedList<Integer>();
 			for (int j :  prefernces[i]) {
 				if (j == -1) continue;
 				if ( Contains(i, prefernces[j])) {
