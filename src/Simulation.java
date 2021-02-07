@@ -137,7 +137,7 @@ public class Simulation {
 			LinkedList<Integer>[] L = Simulation.Groupe(Patient ,Doner );  // retourn liste de preference de chaque patient 
 			String []cadavre = Simulation.blood(3);  //Generer 3 Kidney 
 			int[][] SumKidEX = Simulation.alogKidEx(L); 
-			int [][] SumGreedy = Simulation.alogGreedy(L);
+			int [][] SumGreedy = Simulation.alogKidEx(L); 
 			ArrayList<HashSet<Integer>> SumDirect = Simulation.algoDirDon(L);
 			
 			String rule;
